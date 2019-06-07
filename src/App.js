@@ -1,21 +1,23 @@
 import React from 'react';
 import './App.css';
-import firebase from "./firebaseConfig";
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>#partiuBurgerQueen</h1>
+function App() {
+  return (
+    <Router>
+      <div className='App'>
+        <header className='App-header'>
+          <Route path='/' exact component={Dashboard} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+
         </header>
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
