@@ -1,0 +1,36 @@
+body{
+  width: 100vh;
+  background-image: url('/images/background.jpg');
+  background-repeat: repeat;
+}
+
+.align-form {
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-top: 5vh;
+}
+
+.align-text-link {
+  width: 70vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto auto 5vh;
+}
+
+.link {
+  width: 31vh;
+  font-size: 50px;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #444242;
+  color: #707070;
+}
+
+.link.active {
+  border-bottom: 1px solid #fdbd10;
+  color: #fdbd10;
+}

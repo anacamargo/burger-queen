@@ -1,11 +1,16 @@
 import React from 'react';
+import { transform } from '@babel/core';
 
 function Select(props) {
     const selectStyle = {
-        fontSize: '20px',
-        width: '50vh',
-        margin: '10px 0px 15px',
-        padding: '15px'
+        textTransform: 'capitalize',
+        fontSize: '35px',
+        color: '#787878', 
+        width: '70vh',
+        margin: '15px 0px',
+        padding: '25px 20px',
+        border: '1px solid silver',
+        borderRadius: '10px'
     };
 
     let {options} = props;

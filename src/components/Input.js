@@ -2,10 +2,12 @@ import React from 'react';
 
 function Input(props) {
   const inputStyle = {
-    fontSize: '20px',
-    width: '50vh',
-    margin: '10px 0px 15px',
-    padding: '15px'
+    fontSize: '35px',
+    width: '66vh',
+    margin: '15px 0px',
+    padding: '25px 20px',
+    border: '1px solid silver',
+    borderRadius: '10px'
   }
 
   return (
