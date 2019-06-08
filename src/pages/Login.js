@@ -1,10 +1,8 @@
 import React from 'react';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import firebase from '../firebase-config';
-import { BrowserRouter as Router, Route, Redirect, Link } from 'react-router-dom';
-
-const firebaseAppAuth = firebase.auth();
+import firebase from '../FirebaseWrapper';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -21,13 +19,10 @@ class Login extends React.Component {
     this.setState(newState);
   }
 
-  signIn = () => {
-    firebaseAppAuth.signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then((userCredential) => {
-        sessionStorage['userID'] = userCredential.user.uid;
-        this.props.history.push(`/`);
-      })
-      .catch(alert);
+  signIn = async () => {
+    const userCredential = await firebase.auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+    sessionStorage['userID'] = userCredential.user.uid;
+    this.props.history.push(`/`);
   }
 
   render() {
