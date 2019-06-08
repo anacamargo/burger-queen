@@ -33,28 +33,34 @@ class Register extends React.Component {
     }
   }
 
-    handleChange = (event, element) => {
-      const newState = this.state;
-      newState[element] = event.target.value;
-      this.setState(newState);
-    }
+  handleChange = (event, element) => {
+    const newState = this.state;
+    newState[element] = event.target.value;
+    this.setState(newState);
+  }
 
-    render() {
+  render() {
 
-      const { userRoles, email, name, password, buttonEnabled } = this.state;
+    const { userRoles, email, name, password, buttonEnabled } = this.state;
 
-      return (
-        <section className='App-header'>
-          <Link to='/login'>LOGIN</Link>
-          <Link to='/register'>CADASTRO</Link>
+    return (
+      <section>
+        <form className='align-form'>
+          <div className='align-text-link'>
+            <Link className='link' to='/'>LOGIN</Link>
+            <Link className='link active' to='/register'>CADASTRO</Link>
+          </div>
           <Input text='Nome' value={name} onChange={(event) => this.handleChange(event, 'name')} />
           <Input text='E-mail' value={email} onChange={(event) => this.handleChange(event, 'email')} />
           <Input text='Senha' type='password' value={password} onChange={(event) => this.handleChange(event, 'password')} />
           <Select options={userRoles} onChange={(event) => this.handleChange(event, 'role')} />
-          <Button text='cadastrar' onClick={this.createUser} disabled={!buttonEnabled} />
-        </section>
-      )
-    }
+          <div>
+            <Button text='cadastrar' onClick={this.createUser} disabled={!buttonEnabled} />
+          </div>
+        </form>
+      </section>
+    )
   }
+}
 
-  export default Register;
+export default Register;

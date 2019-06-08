@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import firebase from '../FirebaseWrapper';
 import { Link } from 'react-router-dom';
+import './Style.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,12 +28,18 @@ class Login extends React.Component {
 
   render() {
     return (
-      <section className='App-header'>
-        <Link to='/'>LOGIN</Link>
-        <Link to='register'>CADASTRO</Link>
-        <Input text='E-mail' value={this.state.email} onChange={(event) => this.handleChange(event, 'email')} />
-        <Input text='Senha' type='password' value={this.state.password} onChange={(event) => this.handleChange(event, 'password')} />
-        <Button text='entrar' onClick={this.signIn} />
+      <section>
+        <form className='align-form'>
+          <div className='align-text-link'>
+            <Link className='link active' to='/'>LOGIN</Link>
+            <Link className='link' to='register'>CADASTRO</Link>
+          </div>
+          <Input text='E-mail' value={this.state.email} onChange={(event) => this.handleChange(event, 'email')} />
+          <Input text='Senha' type='password' value={this.state.password} onChange={(event) => this.handleChange(event, 'password')} />
+          <div>
+            <Button text='entrar' onClick={this.signIn} />
+          </div>
+        </form>
       </section>
     )
   }
