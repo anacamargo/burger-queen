@@ -1,31 +1,38 @@
 import firebase from './firebase-config';
 
-class FirebaseAuthWrapper{
-  constructor(){
+class FirebaseAuthWrapper {
+  constructor() {
     this.auth = firebase.auth();
   }
 
-  getCurrentUserID(){
+  getCurrentUserID() {
     return this.auth.currentUser.uid;
   }
 
-  async createUserWithEmailAndPassword(email, password){
+  async createUserWithEmailAndPassword(email, password) {
     return await this.auth.createUserWithEmailAndPassword(email, password);
   };
-  
-  async signInWithEmailAndPassword(email, password){
+
+  async signInWithEmailAndPassword(email, password) {
     return await this.auth.signInWithEmailAndPassword(email, password);
   };
-  
-  async signOut(){
-    sessionStorage['userID'] = null; 
-    await this.auth.signOut(); 
+
+  signOut() {
+    firebase
+      .auth()
+      .signOut()
+      .then(function() {
+        sessionStorage.clear();
+        window.location = '/';
+      }, function(error) {
+        console.error(error);
+      });
   }
 
 }
 
-class FirebaseFirestoreWrapper{
-  constructor(){
+class FirebaseFirestoreWrapper {
+  constructor() {
     this.firestore = firebase.firestore()
   }
 
@@ -39,11 +46,16 @@ class FirebaseFirestoreWrapper{
     });
   }
 
-
+  async getUserById(id) {
+    const doc = await this.firestore.collection("users").doc(id).get();
+    const user = doc.data();
+    user['id'] = id;
+    return user;
+  }
 }
 
-class FirebaseWrapper{
-  constructor(){
+class FirebaseWrapper {
+  constructor() {
     this.auth = new FirebaseAuthWrapper();
     this.firestore = new FirebaseFirestoreWrapper();
   }
