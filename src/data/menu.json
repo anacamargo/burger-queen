@@ -1,0 +1,33 @@
+{
+  "breakfast": [
+    { "name": "Café americano", "price": 5.0 },
+    { "name": "Café com leite", "price": 7.0 },
+    { "name": "Sanduíche de presunto e queijo", "price": 10.0 },
+    { "name": "Suco de fruta natural", "price": 7.0 }
+  ],
+  "allDay": {
+    "hamburger": [
+      { "name": "Simples", "price": 10.0 },
+      { "name": "Duplo", "price": 15.0 }
+    ],
+    "hamburgerType": [
+      { "name" : "Carne Bovina","price": 0 },
+      { "name" : "Frango", "price": 0 },
+      { "name" : "Vegetariano", "price": 0 }
+    ],
+    "extra": [
+      { "name": "Queijo", "price": 1.0 },
+      { "name": "Ovo", "price": 1.0 }
+    ],
+    "sideDish": [
+      { "name": "Batata frita", "price": 5.0 },
+      { "name": "Anéis de cebola", "price": 5.0 }
+    ],
+    "drinks": [
+      { "name": "Água 500ml", "price": 5.0 },
+      { "name": "Água 750ml", "price": 7.0 },
+      { "name": "Bebida gaseificada 500ml", "price": 7.0 },
+      { "name": "Bebida gaseificada 750ml", "price": 10.0 }
+    ]
+  }
+}
