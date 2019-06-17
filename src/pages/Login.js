@@ -28,6 +28,7 @@ class Login extends React.Component {
     sessionStorage['userID'] = firebase.auth.getCurrentUserID();
     const user = await firebase.firestore.getUserById(firebase.auth.getCurrentUserID());
     sessionStorage['userName'] = user.displayName;
+    sessionStorage['role'] = user.role;
     this.props.history.push(`/`);
   }
 

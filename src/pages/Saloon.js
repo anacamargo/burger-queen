@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import v4 from 'uuid/v4';
 
-class Salao extends React.Component {
+class Saloon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -164,4 +164,4 @@ class Salao extends React.Component {
   }
 }
 
-export default Salao; 
+export default Saloon; 
