@@ -1,6 +1,6 @@
 .link {
   width: 31vh;
-  font-size: 40px;
+  font-size: 35px;
   text-decoration-line: underline;
   text-decoration-style: solid;
   text-transform: uppercase;
@@ -10,3 +10,4 @@
 .link.active {
   color: #fdbd10;
 }
+
