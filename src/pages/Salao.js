@@ -75,7 +75,7 @@ class Salao extends React.Component {
         </Col>
       </Row>
       <Row>
-        <Col md='12' lg='12' className='text-center'>
+        <Col md='6' lg='6' className='text-center'>
           <Accordion>
             <Card className='border-0'>
               <Card.Header className='bg-transparent '>
