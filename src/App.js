@@ -9,11 +9,6 @@ function App() {
   return (
     <Router>
       <main className='App'>
-        <section className='App-header'>
-          <header>
-            <figure><img src='/images/logo.png' alt='Burguer Queen' /></figure>
-          </header>
-        </section>
         <Route path='/' exact component={Dashboard} />
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
