@@ -1,6 +1,5 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
 
 class AlertDismissible extends React.Component {
   constructor(props) {
@@ -17,7 +16,6 @@ class AlertDismissible extends React.Component {
 
   render() {
     const handleHide = () => this.setState({ show: false });
-    const handleShow = () => this.setState({ show: true });
     return (
       <React.Fragment>
         <Alert show={this.state.show} variant={this.state.variant} onClose={handleHide} dismissible>
@@ -31,4 +29,3 @@ class AlertDismissible extends React.Component {
   }
 }
 export default AlertDismissible;
-//render(<AlertDismissible />);

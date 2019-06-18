@@ -6,7 +6,6 @@ import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
 import v4 from 'uuid/v4';
 import firebase from '../FirebaseWrapper';
 import AlertDismissible from '../components/AlertDismissible';
@@ -64,6 +63,7 @@ class Saloon extends React.Component {
     try {
       firebase.firestore.createOrder(obj, v4());
       this.toast('success', 'Pedido enviado para cozinha!');
+      this.setState({clientName: '', cart: [], total: 0, alert: null });
     }
     catch (error) { this.toast('danger', 'Erro ao enviar o pedido!'); }
   }

@@ -28,7 +28,6 @@ class FirebaseAuthWrapper {
         console.error(error);
       });
   }
-
 }
 
 class FirebaseFirestoreWrapper {
