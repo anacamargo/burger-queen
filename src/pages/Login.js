@@ -24,7 +24,7 @@ class Login extends React.Component {
 
   signIn = async (e) => {
     e.preventDefault();
-    const userCredential = await firebase.auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+    await firebase.auth.signInWithEmailAndPassword(this.state.email, this.state.password)
     sessionStorage['userID'] = firebase.auth.getCurrentUserID();
     const user = await firebase.firestore.getUserById(firebase.auth.getCurrentUserID());
     sessionStorage['userName'] = user.displayName;
