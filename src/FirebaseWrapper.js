@@ -52,6 +52,17 @@ class FirebaseFirestoreWrapper {
     user['id'] = id;
     return user;
   }
+
+  async createOrder(obj, id) {
+    await this.firestore.doc(`orders/${id}`).set({
+      employeeID: obj.employeeID,
+      employeeName: obj.employeeName,
+      clientName: obj.clientName,
+      cart: obj.cart,
+      total: obj.total,
+      timeStamp: obj.timeStamp
+    });
+  }
 }
 
 class FirebaseWrapper {
