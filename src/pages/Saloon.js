@@ -6,14 +6,19 @@ import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import v4 from 'uuid/v4';
+import firebase from '../FirebaseWrapper';
+import AlertDismissible from '../components/AlertDismissible';
 
 class Saloon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nameClient: '',
-      cart: []
+      clientName: '',
+      cart: [],
+      total: 0,
+      alert: null
     };
   }
 
@@ -27,51 +32,78 @@ class Saloon extends React.Component {
     const index = this.state.cart.findIndex((ordered) => {
       return ordered.name === item.name;
     });
-    if (index < 0) {
-      const newItem = { ...item, amount: 1 };
-      this.setState({
-        cart: this.state.cart.concat(newItem)
-      });
-    } else {
-      let newCart = this.state.cart;
-      newCart[index].amount += 1;
-      this.setState({
-        cart: newCart
-      })
-    }
+
+    let newCart = this.state.cart;
+
+    if (index < 0) newCart.push({ ...item, amount: 1 });
+    else newCart[index].amount += 1;
+
+    const total = this.calcTotal(newCart);
+
+    this.setState({ cart: newCart, total });
+  }
+
+  calcTotal(cart){
+    return cart.reduce((acc, cur) => {
+      return acc + (cur.amount * cur.price)
+    }, 0);
   }
 
   finishOrder = () => {
+    const userID = sessionStorage['userID'];
     const userName = sessionStorage['userName'];
+
     const obj = {
-      nameClient: this.state.nameClient,
-      nameEmployee: userName,
-      cart: this.state.cart
+      employeeID: userID,
+      employeeName: userName,
+      clientName: this.state.clientName,
+      cart: this.state.cart,
+      total: this.state.total,
+      timeStamp: Date.now()
     }
+    try {
+      firebase.firestore.createOrder(obj, v4());
+      this.toast('success', 'Pedido enviado para cozinha!');
+    }
+    catch (error) { this.toast('danger', 'Erro ao enviar o pedido!'); }
   }
 
   deleteItem = (key) => {
-    const item2remove = this.state.cart.filter(x => x.key === key)[0];
-    const items2maintain = this.state.cart.filter(x => x.key != key);
+    const index = this.state.cart.findIndex((ordered) => {
+      return ordered.key === key;
+    });
+    
+    let newCart = this.state.cart;
 
-    if (item2remove.amount > 1) {
-      item2remove.amount--;
-      this.setState({ ...this.state, cart: [item2remove, ...items2maintain] });
-    }
-    else {
-      this.setState({ ...this.state, cart: items2maintain });
-    }
+    if (newCart[index].amount > 1) newCart[index].amount--;
+    else newCart.splice(index,1);
+    
+    const total = this.calcTotal(newCart);
+
+    this.setState({cart : newCart, total})
+  }
+
+  toast(variant, text) {
+    this.setState({ alert: { variant, text } });
+    setTimeout(() => {
+      this.setState({ alert: null });
+    }, 3000);
+  }
+
+  toCurrency(value){
+    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
   render() {
-    const total = this.state.cart.reduce((acc, cur) => {
-      return acc + (cur.amount * cur.price)
-    }, 0);
-
     return <Container>
       <Row>
         <Col md='12' lg='12'>
-          <input className='w-100 p-2 my-3 border rounded' placeholder='Nome do Cliente' value={this.state.nameClient} onChange={(event) => this.handleChange(event, 'nameClient')} />
+          {this.state.alert && <AlertDismissible variant={this.state.alert.variant} text={this.state.alert.text}></AlertDismissible>}
+        </Col>
+      </Row>
+      <Row>
+        <Col md='12' lg='12'>
+          <input className='w-100 p-2 my-3 border rounded' placeholder='Nome do Cliente' value={this.state.clientName} onChange={(event) => this.handleChange(event, 'clientName')} />
         </Col>
       </Row>
       <Row>
@@ -152,12 +184,21 @@ class Saloon extends React.Component {
         <Col md='6' lg='6'>
           {
             this.state.cart.map((item, key) => {
-              return <p key={key}>{item.amount} {item.name} - {item.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} <i className="fas fa-trash-alt" onClick={() => this.deleteItem(item.key)}></i></p>
+              return <p key={key}>
+                {item.amount} {item.name} - {this.toCurrency(item.price)}&nbsp;
+                <i className="fas fa-trash-alt" onClick={() => this.deleteItem(item.key)}></i>
+              </p>
             })
           }
-        <hr />
-        
-        <p className="justify-content-end">Total: {total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} <Button className='btn btn-dark btn-lg ml-4' onClick={this.finishOrder}>Finalizar Pedido</Button></p>
+          <hr />
+          <p className='justify-content-end font-weight-bold'>
+            Total: {this.toCurrency(this.state.total)}
+            {
+              this.state.clientName &&
+              this.state.cart.length > 0 &&
+              <Button className='btn btn-dark btn-lg ml-4' onClick={this.finishOrder}>Finalizar Pedido</Button>
+            }
+          </p>
         </Col>
       </Row>
     </Container>
