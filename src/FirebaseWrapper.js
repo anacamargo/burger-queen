@@ -46,7 +46,7 @@ class FirebaseFirestoreWrapper {
   }
 
   async getUserById(id) {
-    const doc = await this.firestore.collection("users").doc(id).get();
+    const doc = await this.firestore.collection('users').doc(id).get();
     const user = doc.data();
     user['id'] = id;
     return user;
@@ -59,11 +59,27 @@ class FirebaseFirestoreWrapper {
       clientName: obj.clientName,
       cart: obj.cart,
       total: obj.total,
-      timeStamp: obj.timeStamp
+      timeStamp: obj.timeStamp,
+      status: obj.status
     });
   }
-}
 
+  async getOrdersByStatus(status) {
+    const dbOrders = await this.firestore.collection('orders').where('status', '==', status).get();
+    const orders = [];
+    dbOrders.forEach((child) =>{
+      let order = child.data();
+      order['id'] = child.id;
+      orders.push(order);
+    });
+    return orders;
+  }
+  
+  async changeOrderStatus(id, status) {
+    await this.firestore.doc(`orders/${id}`).update({status});
+  }
+}
+  
 class FirebaseWrapper {
   constructor() {
     this.auth = new FirebaseAuthWrapper();
