@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import v4 from 'uuid/v4';
 import firebase from '../FirebaseWrapper';
 import AlertDismissible from '../components/AlertDismissible';
+import orderStatus from '../data/orderStatus';
 
 class Saloon extends React.Component {
   constructor(props) {
@@ -58,7 +59,8 @@ class Saloon extends React.Component {
       clientName: this.state.clientName,
       cart: this.state.cart,
       total: this.state.total,
-      timeStamp: Date.now()
+      timeStamp: Date.now(),
+      status: orderStatus.NEW
     }
     try {
       firebase.firestore.createOrder(obj, v4());
